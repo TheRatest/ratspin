@@ -93,8 +93,6 @@ OtherPage.Button({
 		plr.Character = char
 		newChar:Destroy()
 		wait(3.3)
-		print(char.HumanoidRootPart.Position.x .. char.HumanoidRootPart.Position.y .. char.HumanoidRootPart.Position.z)
-		print(savedPos.x .. savedPos.y .. savedPos.y)
 		char:Move(savedPos)
     end
 })
