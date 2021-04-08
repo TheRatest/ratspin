@@ -88,7 +88,7 @@ OtherPage.Button({
 		char:ClearAllChildren()
 		local newChar = Instance.new("Model")
 		newChar.Parent = workspace
-		game.Players.LocalPlayerCharacter = newChar
+		game.Players.LocalPlayer.Character = newChar
 		wait()
 		plr.Character = char
 		newChar:Destroy()
