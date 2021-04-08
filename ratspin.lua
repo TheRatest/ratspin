@@ -90,7 +90,7 @@ OtherPage.Button({
 		newChar.Parent = workspace
 		game.Players.LocalPlayer.Character = newChar
 		wait()
-		plr.Character = char
+		game.Players.LocalPlayer.Character = char
 		newChar:Destroy()
 		wait(3.3)
 		char:Move(savedPos)
