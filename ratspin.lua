@@ -83,6 +83,7 @@ OtherPage.Button({
     Text = "Respawn",
     Callback = function()
 		local char = game.Players.LocalPlayer.Character
+		local savedPos = char.HumanoidRootPart.Position
 		if char:FindFirstChildOfClass("Humanoid") then char:FindFirstChildOfClass("Humanoid"):ChangeState(15) end
 		char:ClearAllChildren()
 		local newChar = Instance.new("Model")
@@ -91,6 +92,8 @@ OtherPage.Button({
 		wait()
 		plr.Character = char
 		newChar:Destroy()
+		wait(3.3)
+		char.HumanoidRootPart.Position = savedPos
     end
 })
 OtherPage.Button({
@@ -188,6 +191,12 @@ ScriptPage.Button({
             end
         end
     end
+})
+ScriptPage.Button({
+	Text = "Energize GUI",
+	Callback = function()
+		loadstring(game:HttpGet("https://pastebin.com/raw/R1MgDiRX", true))()
+	end
 })
 
 local MainButton = MainPage.Button({
