@@ -105,7 +105,7 @@ OtherPage.Button({
         tpservice:Teleport(game.PlaceId, plr)
     end
 })
--- this piece of shit doesn't want to update
+-- AAAAAA
 OtherPage.Button({
     Text = "Update",
     Callback = function()
