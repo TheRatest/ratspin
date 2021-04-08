@@ -107,6 +107,12 @@ OtherPage.Button({
         tpservice:Teleport(game.PlaceId, plr)
     end
 })
+OtherPage.Button({
+    Text = "Update",
+    Callback = function()
+		loadstring(game:HttpGet("https://raw.githubusercontent.com/TheRatest/ratspin/master/ratspin.lua"))()
+    end
+})
 OtherPage.Dropdown({
     Text = "Credits",
     Callback = function(value)
