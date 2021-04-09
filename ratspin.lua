@@ -4,6 +4,7 @@ local mxSpeed = 12
 local mnRadius = 2
 local mxRadius = 8
 local defHeight = -2.5
+local reachVal = 12
 
 local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/MaterialLua/master/Module.lua"))()
 
@@ -16,11 +17,11 @@ local UI = Material.Load({
 })
 
 local MainPage = UI.New({
-    Title = "Main"
+    Title = "Hat Spin"
 })
 
 local SFOTHPage = UI.New({
-    Title = "SFOTH"
+    Title = "SFOTH IV"
 })
 
 local ScriptPage = UI.New({
@@ -67,7 +68,7 @@ SFOTHPage.Button({
     end
 })
 SFOTHPage.Button({
-    Text = "1k reach (EQUIP SWORD)",
+    Text = "Reach (EQUIP SWORD)",
     Callback = function()
 		local sword = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Tool")
 		local hum = game.Players.LocalPlayer.Character.Humanoid
@@ -76,8 +77,17 @@ SFOTHPage.Button({
 		a=Instance.new("SelectionBox",swdr.Handle)
 		a.Adornee=swdr.Handle
 		swdr.Handle.Massless = true
-		swdr.Handle.Size     = Vector3.new(1000,1000,1000)
+		swdr.Handle.Size     = Vector3.new(reachVal,reachVal,reachVal)
     end
+})
+SFOTHPage.Slider({
+	Text = "Cubic Reach",
+    Callback = function(Value)
+        reachVal = Value
+    end,
+    Min = 1,
+    Max = 1000,
+    Def = 12
 })
 OtherPage.Button({
     Text = "Respawn",
@@ -200,6 +210,21 @@ ScriptPage.Button({
 	Text = "Energize GUI",
 	Callback = function()
 		loadstring(game:HttpGet("https://pastebin.com/raw/R1MgDiRX", true))()
+	end
+})
+ScriptPage.Button({
+	Text = "Big Hat (click 1+ times)",
+	Callback = function()
+		local Hat = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Accessory")
+		Hat.Handle.OriginalSize:Destroy()
+		Hat.Parent = workspace
+		firetouchinterest(Hat:WaitForChild("Handle"),game.Players.LocalPlayer.Character.Head,0)
+	end
+})
+ScriptPage.Button({
+	Text = "Punch Fling",
+	Callback = function()
+		loadstring(game:HttpGet(('https://pastebin.com/raw/YPZ0wNaw'),true))()
 	end
 })
 
