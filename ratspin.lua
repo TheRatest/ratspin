@@ -1,5 +1,5 @@
 -- skidded by Ratest#6186
--- b2
+-- b3
 local mnSpeed = 6
 local mnRadius = 2
 local defHeight = -2.5
@@ -383,7 +383,7 @@ for X = -2500, 2500, 512 do
  
                 P.CFrame = CFrame.new(X,0,Z)
  
-                P.BrickColor = BrickColor.Green()
+                P.BrickColor = BrickColor.Black()
  
                 P.Parent = game.Workspace
  
