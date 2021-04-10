@@ -1,5 +1,5 @@
 -- skidded by Ratest#6186
--- b1
+-- b2
 local mnSpeed = 6
 local mnRadius = 2
 local defHeight = -2.5
@@ -303,6 +303,17 @@ MainPage.Button({
 		end)
 
 		tool.Parent = plr.Backpack
+	end
+})
+
+MainPage.Button({
+	Text = "Drop Hats",
+	Callback = function()
+		for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+			if (v:IsA("Accessory")) then
+				v.Parent = workspace
+			end
+		end
 	end
 })
 
