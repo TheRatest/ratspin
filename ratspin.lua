@@ -1,9 +1,7 @@
 -- skidded by Ratest#6186
--- PLEASE I BEG YOU GITHUB JUST ACCEPT THE FVCKING PUSH
+-- b1
 local mnSpeed = 6
-local mxSpeed = 12
 local mnRadius = 2
-local mxRadius = 8
 local defHeight = -2.5
 local reachVal = 12
 
@@ -18,7 +16,7 @@ local UI = Material.Load({
 })
 
 local MainPage = UI.New({
-    Title = "Hat Spin"
+    Title = "Hat Stuff"
 })
 
 local SFOTHPage = UI.New({
@@ -214,15 +212,6 @@ ScriptPage.Button({
 	end
 })
 ScriptPage.Button({
-	Text = "Big Hat (click 1+ times)",
-	Callback = function()
-		local Hat = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Accessory")
-		Hat.Handle.OriginalSize:Destroy()
-		Hat.Parent = workspace
-		firetouchinterest(Hat:WaitForChild("Handle"),game.Players.LocalPlayer.Character.Head,0)
-	end
-})
-ScriptPage.Button({
 	Text = "Punch Fling",
 	Callback = function()
 		loadstring(game:HttpGet(('https://pastebin.com/raw/YPZ0wNaw'),true))()
@@ -232,7 +221,7 @@ ScriptPage.Button({
 local MainButton = MainPage.Button({
     Text = "Start",
     Callback = function()
-       doHairSpin() 
+       doHairSpin()
     end
 })
 local RemoveMesh = MainPage.Toggle({
@@ -243,97 +232,117 @@ local RemoveMesh = MainPage.Toggle({
     Enabled = false
 })
 local MinSpeed = MainPage.Slider({
-    Text = "Min Speed",
+    Text = "Speed",
     Callback = function(Value)
         mnSpeed = Value
     end,
-    Min = 1,
+    Min = -180,
     Max = 180,
     Def = 6
 })
-local MaxSpeed = MainPage.Slider({
-    Text = "Max Speed",
-    Callback = function(Value)
-        mxSpeed = Value
-    end,
-    Min = 1,
-    Max = 180,
-    Def = 12
-})
 local MinRadius = MainPage.Slider({
-    Text = "Min Radius",
+    Text = "Radius",
     Callback = function(Value)
         mnRadius = Value
     end,
     Min = 1,
     Max = 50,
-    Def = 2
-})
-local MaxRadius = MainPage.Slider({
-    Text = "Max Radius",
-    Callback = function(Value)
-        mxRadius = Value
-    end,
-    Min = 1,
-    Max = 50,
-    Def = 8
+    Def = 5
 })
 local Height = MainPage.Slider({
     Text = "Height",
     Callback = function(Value)
         defHeight = Value
     end,
-    Min = -2.5,
+    Min = -2,
     Max = 10,
-    Def = -2.5
+    Def = 0
 })
 
-local AmountHat = 3
-
-local AmountOfHats = MainPage.Slider({
-    Text = "Amount of hats",
-    Callback = function(Value)
-        AmountHat = Value
-    end,
-    Min = 1,
-    Max = 10,
-    Def = 3
+MainPage.Button({
+	Text = "Big Hat (click 1+ times)",
+	Callback = function()
+		local Hat = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Accessory")
+		Hat.Handle.OriginalSize:Destroy()
+		Hat.Parent = workspace
+		firetouchinterest(Hat:WaitForChild("Handle"),game.Players.LocalPlayer.Character.Head,0)
+	end
 })
 
-local AmountMode = MainPage.Button({
-    Text = "Amountal",
+MainPage.Button({
+    Text = "FE Build",
+	Callback = function()
+		loadstring(game:HttpGet("https://ssbtools.netlify.app/newscript.txt"))()
+	end
+})
+
+MainPage.Button({
+    Text = "Place Hat",
     Callback = function()
-        for i = 1, AmountHat, 1 do
-            doHairSpin()
-        end
+		PlaceHat()
     end
 })
 
-function doHairSpin()
+MainPage.Button({
+	Text = "Hat Removal Tool",
+	Callback = function()
+		local plr = game:GetService("Players").LocalPlayer
+		local mouse = plr:GetMouse()
 
+		local tool = Instance.new("Tool")
+		tool.RequiresHandle = false
+		tool.Name = "Hat Removal Tool"
+
+		tool.Activated:Connect(function()
+		if mouse.Target ~= nil then
+			if(mouse.Target.Parent.ClassName == "Accessory") then
+				local mT = mouse.Target
+				mT:remove()
+			end
+		end
+		end)
+
+		tool.Parent = plr.Backpack
+	end
+})
+
+function doHairSpin()
 -- Your nickname
 local NICKNAME = game.Players.LocalPlayer.Name
 
 local hat = game.Players.LocalPlayer.Character:FindFirstChildOfClass("Accessory")
 -- Default: 0-360
 local angle = 0
--- Default: 3-14
-local defRadius = math.random(mnRadius, mxRadius)
--- Default: 2-10
-local defSpeed = math.random(mnSpeed, mxSpeed)
 -- Remove mesh if enabled
 if(RemoveMesh:GetState()) then hat.Handle.Mesh:remove() end
+-- something attach
+	hat.Handle.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0, 0, 0);
+	hat.Handle.CanCollide = false;
+	hat.Handle:BreakJoints();
+	local still = Instance.new('BodyAngularVelocity', hat.Handle);
+	still.MaxTorque = Vector3.new(math.huge, math.huge, math.huge);
+	still.AngularVelocity = Vector3.new(0, 0, 0);
+	local align = Instance.new('AlignPosition', hat.Handle);
+	align.MaxForce = 1000000;
+	align.MaxVelocity = math.huge;
+	align.RigidityEnabled = false;
+	align.ApplyAtCenterOfMass = true;
+	align.Responsiveness = 200;
+	local a0 = Instance.new('Attachment', hat.Handle);
+	local a1 = Instance.new('Attachment', game:GetService("Players").LocalPlayer.Character.Head);
+	align.Attachment0 = a0;
+	align.Attachment1 = a1;
 -- Unattach the hat
 hat.Parent = game.Workspace
 while(game.Workspace:FindFirstChild(NICKNAME)) do
-    wait(0.03)
+    wait(0.01)
     local player = game.Players.LocalPlayer
     local TorsoPos = player.Character.Torso.Position
     if(angle > 359) then angle = 0 end
-    angle = angle + defSpeed
-    local xF = TorsoPos.x + defRadius * math.cos(math.rad(angle))
-    local zF = TorsoPos.z + defRadius * math.sin(math.rad(angle))
-    hat.Handle.Position = Vector3.new(xF, TorsoPos.y + defHeight, zF)
+    angle = angle + mnSpeed
+    local xF = mnRadius * math.cos(math.rad(angle))
+    local zF = mnRadius * math.sin(math.rad(angle))
+    a1.CFrame = CFrame.new(Vector3.new(xF, defHeight, zF)) * CFrame.fromEulerAnglesXYZ(0, 0, 0)
 end
 end
 
@@ -372,42 +381,37 @@ for X = -2500, 2500, 512 do
 end
 end
 
-function hairFling()
---script made by kuraga#4659
+function PlaceHat()
+local Player = game:GetService("Players").LocalPlayer
+local Char = Player.Character
+local HatToPlace = Char:FindFirstChildOfClass("Accessory")
+local mouse = Player:GetMouse()
+local what = {}
 
-for i,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
-if v.ClassName == "Accessory" then v.Parent = workspace
+-- trans meaning transparent not transgender
+local TransHat = HatToPlace.Handle:Clone()
+TransHat.Transparency = 0.1
+TransHat.Parent = game.Workspace
+TransHat.CanCollide = False
+
+local DidNotPlaceYet = true
+local hatPos = mouse.Hit.Position
+
+while(DidNotPlaceYet) do
+    wait(0.02)
+    TransHat.Position = mouse.Hit.Position
+    mouse.Button1Down:Connect(function()
+        if(DidNotPlaceYet) then
+        TransHat:remove()
+        hatPos = mouse.Hit.Position
+        HatToPlace.Parent = game.Workspace
+        DidNotPlaceYet = false
+        end
+    end)
 end
-end
-gh = game.Players.LocalPlayer.Name
-game.Workspace[gh]:Destroy()
-wait(2)
-   spawn(function()
-   while wait() do
-       sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-       sethiddenproperty(game.Players.LocalPlayer, "MaximumSimulationRadius", math.huge)
-   end
-end)
-   for i,d in pairs(workspace:GetChildren()) do
-     if d:IsA("Accessory") then 
-local temp = Instance.new("BodyPosition")
-temp.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
-temp.Parent = d.Handle
- spawn(function()
-   while wait() do
-       sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
-       sethiddenproperty(game.Players.LocalPlayer, "MaximumSimulationRadius", math.huge)
-   end
-end)
-local temp1 = Instance.new("BodyThrust")
-temp1.Location = Vector3.new(5,0,0)
-temp1.Force = Vector3.new(10000,10000,10000)
-temp1.Parent = d.Handle
-d.Handle.CanCollide = false
-game:GetService("RunService").RenderStepped:Connect(function()
-d.Handle.Position = game.Players.LocalPlayer:GetMouse().Hit.p + Vector3.new(0,2,0)
-temp.Position = game.Players.LocalPlayer:GetMouse().Hit.p + Vector3.new(0,2,0)
-end)
-end
+
+while(HatToPlace.Parent == game.Workspace) do
+    wait(0.02)
+    HatToPlace.Handle.Position = hatPos
 end
 end
