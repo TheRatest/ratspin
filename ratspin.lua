@@ -1,5 +1,5 @@
 -- skidded by Ratest#6186
--- b3
+-- b4
 local mnSpeed = 6
 local mnRadius = 2
 local defHeight = -2.5
@@ -195,17 +195,6 @@ ScriptPage.Button({
     end
 })
 ScriptPage.Button({
-    Text = "Remove Hats Mesh",
-    Callback = function()
-        for _,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
-            if (v:IsA("Accessory")) then
-                if(v.Handle:FindFirstChild("Mesh")) then v.Handle:FindFirstChild("Mesh"):remove() end
-                if(v.Handle:FindFirstChild("SpecialMesh")) then v.Handle:FindFirstChild("SpecialMesh"):remove() end
-            end
-        end
-    end
-})
-ScriptPage.Button({
 	Text = "Energize GUI",
 	Callback = function()
 		loadstring(game:HttpGet("https://pastebin.com/raw/R1MgDiRX", true))()
@@ -315,6 +304,18 @@ MainPage.Button({
 			end
 		end
 	end
+})
+
+MainPage.Button({
+    Text = "Remove Hats Mesh",
+    Callback = function()
+        for _,v in pairs(game.Players.LocalPlayer.Character:GetChildren()) do
+            if (v:IsA("Accessory")) then
+                if(v.Handle:FindFirstChild("Mesh")) then v.Handle:FindFirstChild("Mesh"):remove() end
+                if(v.Handle:FindFirstChild("SpecialMesh")) then v.Handle:FindFirstChild("SpecialMesh"):remove() end
+            end
+        end
+    end
 })
 
 function doHairSpin()
