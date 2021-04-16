@@ -1,5 +1,5 @@
 -- skidded by Ratest#6186
--- b4
+-- b5 16.04.2021
 local mnSpeed = 6
 local mnRadius = 2
 local defHeight = -2.5
@@ -88,6 +88,60 @@ SFOTHPage.Slider({
     Max = 1000,
     Def = 12
 })
+local ABOSSBRIENG = OtherPage.TextField({
+    Text = "Username",
+    Callback = function(value)
+    end
+})
+OtherPage.Button({
+	Text = "TP To Abyss",
+	Callback = function()
+		local PortalPos = Vector3.new(-8,290.4,-140.5)
+		local speaker = game.Players.LocalPlayer
+		local target = getShortPlayer(string.lower(ABOSSBRIENG:GetText()))
+		local char = speaker.Character
+		local tchar = target.Character
+		local hum = speaker.Character:FindFirstChildOfClass("Humanoid")
+		local hrp = speaker.Character.HumanoidRootPart
+		local hrp2 = target.Character.HumanoidRootPart
+		hum.Name = "1"
+		local newHum = hum:Clone()
+		newHum.Parent = char
+		newHum.Name = "Humanoid"
+		wait()
+		hum:Destroy()
+		workspace.CurrentCamera.CameraSubject = char
+		newHum.DisplayDistanceType = "None"
+		local tool = speaker:FindFirstChildOfClass("Backpack"):FindFirstChildOfClass("Tool") or speaker.Character:FindFirstChildOfClass("Tool")
+		tool.Parent = char
+		hrp.CFrame = hrp2.CFrame * CFrame.new(0, 0, 0) * CFrame.new(math.random(-100, 100)/200,math.random(-100, 100)/200,math.random(-100, 100)/200)
+		local n = 0
+		repeat
+			wait(.1)
+			n = n + 1
+			hrp.CFrame = hrp2.CFrame
+		until (tool.Parent ~= char or not hrp or not hrp2 or not hrp.Parent or not hrp2.Parent or n > 250) and n > 2
+		repeat
+			wait()
+			hrp.CFrame = CFrame.new(PortalPos)
+		until not hrp2 or not hrp
+		wait(1)
+		for iLoveNiggers = 0, 100 do
+			wait(0.02)
+			speaker.CharacterAdded:Wait():WaitForChild("HumanoidRootPart").CFrame = CFrame.new(PortalPos)
+		end
+	end
+})
+
+function getShortPlayer(shortName)
+		for _,plr in pairs(game.Players:GetChildren()) do
+			local fullName = string.lower(plr.Name) -- lowercase here too
+			if shortName == string.sub(fullName,1,string.len(shortName)) then 
+			return(game.Players[plr.Name])
+			end
+		end
+end
+
 OtherPage.Button({
     Text = "Respawn",
     Callback = function()
